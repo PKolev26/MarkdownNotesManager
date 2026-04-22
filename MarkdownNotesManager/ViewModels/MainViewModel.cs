@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using MarkdownNotesManager.App.Commands;
+﻿using MarkdownNotesManager.App.Commands;
 using MarkdownNotesManager.Core.Interfaces;
 using MarkdownNotesManager.Core.Models;
 using MarkdownNotesManager.Infrastructure.Services;
@@ -9,7 +8,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
 
 namespace MarkdownNotesManager.App.ViewModels
 {
@@ -60,10 +58,10 @@ namespace MarkdownNotesManager.App.ViewModels
             _categoryService = categoryService;
             _markdownService = markdownService;
 
-            LoadCommand = new AsyncRelayCommand(LoadDataAsync);
-            NewNoteCommand = new RelayCommand(CreateNewNote);
-            SaveNoteCommand = new AsyncRelayCommand(SaveNoteAsync, () => SelectedNote != null);
-            DeleteNoteCommand = new AsyncRelayCommand(DeleteNoteAsync, () => SelectedNote != null);
+            LoadCommand = new RelayCommand(async _ => await LoadDataAsync());
+            NewNoteCommand = new RelayCommand(_ => CreateNewNote());
+            SaveNoteCommand = new RelayCommand(async _ => await SaveNoteAsync());
+            DeleteNoteCommand = new RelayCommand(async _ => await DeleteNoteAsync());
 
             _ = LoadDataAsync();
         }

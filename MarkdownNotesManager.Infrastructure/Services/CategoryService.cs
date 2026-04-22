@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MarkdownNotesManager.Core.Interfaces;
+﻿using MarkdownNotesManager.Core.Interfaces;
 using MarkdownNotesManager.Core.Models;
 
 namespace MarkdownNotesManager.Infrastructure.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
 

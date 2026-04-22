@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MarkdownNotesManager
+namespace MarkdownNotesManager.App
 {
     public partial class MainWindow : Window
     {
