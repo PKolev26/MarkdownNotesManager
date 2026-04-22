@@ -13,4 +13,10 @@
     <ProjectReference Include="..\MarkdownNotesManager.Infrastructure\MarkdownNotesManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>

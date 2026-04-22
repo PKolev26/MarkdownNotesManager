@@ -21,4 +21,9 @@
     <ProjectReference Include="..\MarkdownNotesManager.Core\MarkdownNotesManager.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
