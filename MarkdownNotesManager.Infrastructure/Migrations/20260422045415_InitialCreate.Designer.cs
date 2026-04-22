@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkdownNotesManager.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260422040656_InitialCreate")]
+    [Migration("20260422045415_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

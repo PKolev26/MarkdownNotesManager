@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MarkdownNotesManager.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using MarkdownNotesManager.Core.Models;
+using System;
+using System.IO;
 
 namespace MarkdownNotesManager.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Note> Notes => Set<Note>();
+        public DbSet<Category> Categories => Set<Category>();
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=markdownnotes.db");
+            var dbPath = Path.Combine(AppContext.BaseDirectory, "markdownnotes.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Note>()
-                .HasOne(n => n.Category)
-                .WithMany(c => c.Notes)
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Notes)
+                .WithOne(n => n.Category)
                 .HasForeignKey(n => n.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
         }
