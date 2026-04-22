@@ -21,5 +21,25 @@ namespace MarkdownNotesManager.Infrastructure.Services
         {
             return _categoryRepository.AddAsync(category);
         }
+
+        public Task UpdateCategoryAsync(Category category)
+        {
+            return _categoryRepository.UpdateAsync(category);
+        }
+
+        public async Task DeleteCategoryAsync(int id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+
+            if (category != null)
+            {
+                await _categoryRepository.DeleteAsync(category);
+            }
+        }
+
+        public Task<List<Note>> GetNotesByCategoryAsync(int categoryId)
+        {
+            return _categoryRepository.GetNotesByCategoryAsync(categoryId);
+        }
     }
 }

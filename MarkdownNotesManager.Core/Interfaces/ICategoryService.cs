@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MarkdownNotesManager.Core.Models;
+﻿using MarkdownNotesManager.Core.Models;
 
 namespace MarkdownNotesManager.Core.Interfaces
 {
@@ -11,5 +6,8 @@ namespace MarkdownNotesManager.Core.Interfaces
     {
         Task<List<Category>> GetAllCategoriesAsync();
         Task AddCategoryAsync(Category category);
+        Task UpdateCategoryAsync(Category category);
+        Task DeleteCategoryAsync(int id);
+        Task<List<Note>> GetNotesByCategoryAsync(int categoryId);
     }
 }
