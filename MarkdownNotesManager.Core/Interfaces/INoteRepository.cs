@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarkdownNotesManager.Core.Interfaces
 {
-    public interface INoteRepository_cs
+    public interface INoteRepository
     {
         Task<List<Note>> GetAllNotesAsync();
         Task<Note?> GetByIdAsync(int id);
