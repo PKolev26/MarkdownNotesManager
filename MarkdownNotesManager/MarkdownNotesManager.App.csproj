@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MarkdownNotesManager.Core\MarkdownNotesManager.Core.csproj" />
+    <ProjectReference Include="..\MarkdownNotesManager.Infrastructure\MarkdownNotesManager.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
