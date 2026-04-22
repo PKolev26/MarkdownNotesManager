@@ -14,5 +14,7 @@ namespace MarkdownNotesManager.Core.Interfaces
         Task AddAsync(Note note);
         Task UpdateAsync(Note note);    
         Task DeleteAsync(int id);
+
+        Task<List<Note>> GetNotesByCategoryIdAsync(int categoryId);
     }
 }

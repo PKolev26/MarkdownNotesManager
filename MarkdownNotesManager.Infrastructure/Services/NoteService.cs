@@ -45,5 +45,9 @@ namespace MarkdownNotesManager.Infrastructure.Services
             return _noteRepository.DeleteAsync(id);
         }
 
+        public Task<object> GetNotesByCategoryAsync(int id)
+        {
+            return _noteRepository.GetNotesByCategoryIdAsync(id).ContinueWith(t => (object)t.Result);
+        }
     }
 }

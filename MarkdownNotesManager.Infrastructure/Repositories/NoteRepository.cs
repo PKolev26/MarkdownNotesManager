@@ -48,5 +48,11 @@ namespace MarkdownNotesManager.Infrastructure.Repositories
                 await db.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Note>> GetNotesByCategoryIdAsync(int categoryId)
+        {
+            using var db = new AppDbContext();
+            return await db.Notes.Where(n => n.CategoryId == categoryId).Include(n => n.Category).ToListAsync();
+        }
     }
 }
