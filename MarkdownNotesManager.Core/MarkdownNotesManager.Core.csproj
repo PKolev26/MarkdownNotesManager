@@ -11,8 +11,4 @@
     <None Remove="Models\uvqh5mmg.b4f~" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>
