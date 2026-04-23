@@ -1,0 +1,57 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          cache: true
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
+
+      - name: Run unit tests
+        run: dotnet test --no-restore --configuration Release
+
+      - name: Decode certificate
+        shell: pwsh
+        run: |
+          $pfxBytes = [Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+          $certificatePath = Join-Path $env:Wap_Project_Directory "GitHubActionsWorkflow.pfx"
+          [IO.File]::WriteAllBytes($certificatePath, $pfxBytes)
+
+      - name: Create app package
+        run: >
+          msbuild $env:Wap_Project_Path
+          /p:Configuration=Release
+          /p:UapAppxPackageBuildMode=StoreUpload
+          /p:AppxBundle=Always
+          /p:AppxBundlePlatforms="x86|x64"
+          /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx
+          /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+
+      - name: Remove certificate
+        shell: pwsh
+        run: Remove-Item -Path "$env:Wap_Project_Directory\GitHubActionsWorkflow.pfx"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MSIX-Package
+          path: ${{ env.Wap_Project_Directory }}\AppPackages
+          if-no-files-found: error
