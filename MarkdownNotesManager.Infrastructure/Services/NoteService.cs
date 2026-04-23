@@ -1,9 +1,4 @@
 ﻿using MarkdownNotesManager.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MarkdownNotesManager.Core.Models;
 
 namespace MarkdownNotesManager.Infrastructure.Services
@@ -19,7 +14,12 @@ namespace MarkdownNotesManager.Infrastructure.Services
 
         public Task<List<Note>> GetAllNotesAsync()
         {
-            return _noteRepository.GetAllNotesAsync();
+            return _noteRepository.GetAllAsync();
+        }
+
+        public Task<List<Note>> GetNotesByCategoryAsync(int categoryId)
+        {
+            return _noteRepository.GetNotesByCategoryAsync(categoryId);
         }
 
         public Task<Note?> GetNoteByIdAsync(int id)
@@ -27,27 +27,22 @@ namespace MarkdownNotesManager.Infrastructure.Services
             return _noteRepository.GetByIdAsync(id);
         }
 
-        public Task AddNoteAsync(Note note)
+        public async Task AddNoteAsync(Note note)
         {
             note.CreatedAt = DateTime.Now;
             note.UpdatedAt = DateTime.Now;
-            return _noteRepository.AddAsync(note);
+            await _noteRepository.AddAsync(note);
         }
 
-        public Task UpdateNoteAsync(Note note)
+        public async Task UpdateNoteAsync(Note note)
         {
             note.UpdatedAt = DateTime.Now;
-            return _noteRepository.UpdateAsync(note);
+            await _noteRepository.UpdateAsync(note);
         }
 
         public Task DeleteNoteAsync(int id)
         {
             return _noteRepository.DeleteAsync(id);
-        }
-
-        public Task<object> GetNotesByCategoryAsync(int id)
-        {
-            return _noteRepository.GetNotesByCategoryIdAsync(id).ContinueWith(t => (object)t.Result);
         }
     }
 }

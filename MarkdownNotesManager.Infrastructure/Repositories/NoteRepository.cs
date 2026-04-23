@@ -12,7 +12,7 @@ namespace MarkdownNotesManager.Infrastructure.Repositories
 {
     public class NoteRepository : INoteRepository
     {
-        public async Task<List<Note>> GetAllNotesAsync()
+        public async Task<List<Note>> GetAllAsync()
         {
             using var db = new AppDbContext();
             return await db.Notes.Include(n => n.Category).ToListAsync();
@@ -27,6 +27,12 @@ namespace MarkdownNotesManager.Infrastructure.Repositories
         public async Task AddAsync(Note note)
         {
             using var db = new AppDbContext();
+
+            if (note.Category != null)
+            {
+                db.Entry(note.Category).State = EntityState.Unchanged;
+            }
+
             db.Notes.Add(note);
             await db.SaveChangesAsync();
         }
@@ -48,8 +54,7 @@ namespace MarkdownNotesManager.Infrastructure.Repositories
                 await db.SaveChangesAsync();
             }
         }
-
-        public async Task<List<Note>> GetNotesByCategoryIdAsync(int categoryId)
+        public async Task<List<Note>> GetNotesByCategoryAsync(int categoryId)
         {
             using var db = new AppDbContext();
             return await db.Notes.Where(n => n.CategoryId == categoryId).Include(n => n.Category).ToListAsync();
