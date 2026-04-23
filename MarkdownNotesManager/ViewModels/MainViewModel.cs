@@ -193,8 +193,8 @@ namespace MarkdownNotesManager.App.ViewModels
         {
             SelectedNote = new Note
             {
-                Title = "New Note",
-                Content = "# New Note",
+                Title = "New Note ✏️",
+                Content = "# New Note ✏️",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 CategoryId = SelectedCategory?.Id,
