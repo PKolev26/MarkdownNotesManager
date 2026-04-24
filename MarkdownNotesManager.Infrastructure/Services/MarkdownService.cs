@@ -1,5 +1,4 @@
 ﻿using Markdig;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MarkdownNotesManager.Infrastructure.Services
 {

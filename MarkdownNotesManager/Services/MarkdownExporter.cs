@@ -1,9 +1,7 @@
-using System;
+using MarkdownNotesManager.Core.Models;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using MarkdownNotesManager.Core.Models;
 
 namespace MarkdownNotesManager.App.Services
 {

@@ -4,12 +4,9 @@ using MarkdownNotesManager.Core.Interfaces;
 using MarkdownNotesManager.Core.Models;
 using MarkdownNotesManager.Infrastructure.Services;
 using Microsoft.Win32;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MarkdownNotesManager.App.ViewModels
@@ -57,8 +54,7 @@ namespace MarkdownNotesManager.App.ViewModels
             {
                 try
                 {
-                    var content = SelectedNote.Content ?? string.Empty;
-                    await File.WriteAllTextAsync(dlg.FileName, content);
+                    await MarkdownExporter.ExportNoteAsync(SelectedNote, dlg.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +121,6 @@ namespace MarkdownNotesManager.App.ViewModels
             MarkdownService markdownService)
         {
             _noteService = noteService;
-            _category_service_check(noteService);
             _categoryService = categoryService;
             _markdownService = markdownService;
 
@@ -147,9 +142,6 @@ namespace MarkdownNotesManager.App.ViewModels
 
             _ = LoadDataAsync();
         }
-
-        private void _category_service_check(INoteService s) { }
-
         public async Task LoadDataAsync()
         {
             Notes.Clear();
@@ -177,21 +169,11 @@ namespace MarkdownNotesManager.App.ViewModels
 
         private async Task<List<Note>> FetchNotesForCurrentFilterAsync(bool includeAll = false)
         {
-            if (SelectedCategory == null && includeAll)
-            {
+            if (SelectedCategory == null)
                 return await _noteService.GetAllNotesAsync();
-            }
-            else if (SelectedCategory == null)
-            {
-                return await _note_service_get_all_async_fallback();
-            }
-            else
-            {
-                return await _noteService.GetNotesByCategoryAsync(SelectedCategory.Id);
-            }
-        }
-        private Task<List<Note>> _note_service_get_all_async_fallback() => _noteService.GetAllNotesAsync();
 
+            return await _noteService.GetNotesByCategoryAsync(SelectedCategory.Id);
+        }
         private void ApplySortAndLoad(IEnumerable<Note> sourceNotes)
         {
             Notes.Clear();
@@ -264,19 +246,12 @@ Console.WriteLine(""Hello world!"");
             }
             else
             {
-                await _note_service_update_check(SelectedNote);
                 await _noteService.UpdateNoteAsync(SelectedNote);
             }
 
             await ReloadNotesKeepSelectionAsync(SelectedNote.Id);
             UpdatePreview();
         }
-
-        private Task _note_service_update_check(Note note)
-        {
-            return Task.CompletedTask;
-        }
-
         private async Task DeleteNoteAsync()
         {
             if (SelectedNote == null)
@@ -369,5 +344,6 @@ Console.WriteLine(""Hello world!"");
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
     }
 }

@@ -1,14 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MarkdownNotesManager.App.Commands;
+﻿using MarkdownNotesManager.App.Commands;
 using MarkdownNotesManager.App.ViewModels;
 using MarkdownNotesManager.Core.Interfaces;
 using MarkdownNotesManager.Core.Models;
 using MarkdownNotesManager.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MarkdownNotesManager.Tests
 {

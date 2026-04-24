@@ -1,7 +1,5 @@
 ﻿using MarkdownNotesManager.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
 
 namespace MarkdownNotesManager.Infrastructure.Data
 {

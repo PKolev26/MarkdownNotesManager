@@ -1,12 +1,7 @@
 ﻿using MarkdownNotesManager.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MarkdownNotesManager.Core.Models;
 using MarkdownNotesManager.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarkdownNotesManager.Infrastructure.Repositories
 {

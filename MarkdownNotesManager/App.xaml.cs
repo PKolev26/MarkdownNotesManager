@@ -5,7 +5,6 @@ using MarkdownNotesManager.Infrastructure.Repositories;
 using MarkdownNotesManager.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Windows;
 
 namespace MarkdownNotesManager.App
