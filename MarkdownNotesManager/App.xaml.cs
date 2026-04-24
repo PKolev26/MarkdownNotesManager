@@ -1,7 +1,9 @@
 ﻿using MarkdownNotesManager.App.ViewModels;
 using MarkdownNotesManager.Core.Interfaces;
+using MarkdownNotesManager.Infrastructure.Data;
 using MarkdownNotesManager.Infrastructure.Repositories;
 using MarkdownNotesManager.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
@@ -35,9 +37,15 @@ namespace MarkdownNotesManager.App
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            using (var db = new AppDbContext())
+            {
+                db.Database.Migrate();
+            }
+
+            base.OnStartup(e);
+
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
-            base.OnStartup(e);
         }
     }
 }
