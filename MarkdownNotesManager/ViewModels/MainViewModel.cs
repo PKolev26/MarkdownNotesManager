@@ -36,6 +36,8 @@ namespace MarkdownNotesManager.App.ViewModels
         public ICommand ShowPreviewCommand { get; }
         public ICommand SortByCategoryCommand { get; }
 
+        public ICommand ShowAllNotesCommand { get; }
+
         public RelayCommand ExportNoteCommand { get; }
 
         private async Task ExportNoteAsync()
@@ -137,6 +139,8 @@ namespace MarkdownNotesManager.App.ViewModels
             SortByCategoryCommand = new RelayCommand(async _ => { _sortAscending = !_sortAscending; await ReloadNotesKeepSelectionAsync(SelectedNote?.Id ?? 0); });
 
             ExportNoteCommand = new RelayCommand(async _ => await ExportNoteAsync());
+
+            ShowAllNotesCommand = new RelayCommand(async _ => await ShowAllNotesAsync());
 
             IsPreviewMode = false;
 
@@ -336,6 +340,33 @@ Console.WriteLine(""Hello world!"");
                 SelectedCategory = null;
                 await LoadDataAsync();
             }
+        }
+
+        private async Task ReloadNotesForCurrentFilterAsync()
+        {
+            List<Note> notes;
+
+            if (SelectedCategory == null)
+            {
+                notes = await _noteService.GetAllNotesAsync();
+            }
+            else
+            {
+                notes = await _noteService.GetNotesByCategoryAsync(SelectedCategory.Id);
+            }
+
+            Notes.Clear();
+
+            foreach (var note in notes)
+            {
+                Notes.Add(note);
+            }
+        }
+
+        private async Task ShowAllNotesAsync()
+        {
+            SelectedCategory = null;
+            await ReloadNotesForCurrentFilterAsync();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

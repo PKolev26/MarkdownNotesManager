@@ -78,22 +78,27 @@
                 BorderThickness="1">
             <StackPanel>
                 <TextBlock Text="Notes"
-                           FontSize="16"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,10"/>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+               FontSize="16"
+               FontWeight="SemiBold"
+               Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                     <Button Content="New Note ✏️"
-                            Command="{Binding NewNoteCommand}"
-                            Style="{StaticResource PrimaryButton}"
-                            Margin="0,0,8,0"/>
+                Command="{Binding NewNoteCommand}"
+                Style="{StaticResource PrimaryButton}"/>
                     <Button Content="Sort by Category"
-                            Command="{Binding SortByCategoryCommand}"
-                            Style="{StaticResource SoftButton}"/>
+                Command="{Binding SortByCategoryCommand}"
+                Style="{StaticResource SoftButton}"/>
                 </StackPanel>
+                <Button Content="All Notes"
+            Command="{Binding ShowAllNotesCommand}"
+            Style="{StaticResource PrimaryButton}"
+            Width="210"
+            HorizontalAlignment="Left"
+            Margin="5,0,0,5"/>
                 <ListBox ItemsSource="{Binding Notes}"
-                         SelectedItem="{Binding SelectedNote}"
-                         BorderThickness="0"
-                         Background="Transparent">
+             SelectedItem="{Binding SelectedNote}"
+             BorderThickness="0"
+             Background="Transparent">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="4">
