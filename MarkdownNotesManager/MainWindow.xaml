@@ -136,7 +136,8 @@
                     <Grid Width="220" Margin="0,0,12,0">
                         <ComboBox x:Name="CategoryComboBox"
                               ItemsSource="{Binding Categories}"
-                              SelectedItem="{Binding SelectedNote.Category}"
+                              SelectedValue="{Binding SelectedNote.CategoryId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValuePath="Id"
                               DisplayMemberPath="Name"/>
                         <TextBlock Text="Select category"
                                Foreground="#777"

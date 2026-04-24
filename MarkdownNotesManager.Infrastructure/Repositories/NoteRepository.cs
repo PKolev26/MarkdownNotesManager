@@ -35,7 +35,17 @@ namespace MarkdownNotesManager.Infrastructure.Repositories
         public async Task UpdateAsync(Note note)
         {
             using var db = new AppDbContext();
-            db.Notes.Update(note);
+
+            var existingNote = await db.Notes.FirstOrDefaultAsync(n => n.Id == note.Id);
+
+            if (existingNote == null)
+                return;
+
+            existingNote.Title = note.Title;
+            existingNote.Content = note.Content;
+            existingNote.UpdatedAt = DateTime.Now;
+            existingNote.CategoryId = note.CategoryId;
+
             await db.SaveChangesAsync();
         }
 

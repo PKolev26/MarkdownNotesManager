@@ -230,7 +230,7 @@ Console.WriteLine(""Hello world!"");
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 CategoryId = SelectedCategory?.Id,
-                Category = SelectedCategory
+                Category = null
             };
 
             IsPreviewMode = false;
