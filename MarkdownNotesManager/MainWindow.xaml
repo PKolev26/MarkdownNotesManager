@@ -9,7 +9,6 @@
         Title="Markdown Notes Manager"
         Height="720" Width="1200"
         Background="#FFF5F7FB">
-
     <Window.Resources>
         <conv:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
@@ -189,6 +188,12 @@
                             Command="{Binding DeleteNoteCommand}"
                             Style="{StaticResource SoftButton}"
                             Width="90"/>
+
+                    <Button Content="Export"
+                            Command="{Binding ExportNoteCommand}"
+                            Style="{StaticResource SoftButton}"
+                            Width="90"
+                            ToolTip="Export selected note to a file"/>
 
                     <Button Content="Save"
                             Command="{Binding SaveNoteCommand}"

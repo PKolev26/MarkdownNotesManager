@@ -1,10 +1,13 @@
 ﻿using MarkdownNotesManager.App.Commands;
+using MarkdownNotesManager.App.Services;
 using MarkdownNotesManager.Core.Interfaces;
 using MarkdownNotesManager.Core.Models;
 using MarkdownNotesManager.Infrastructure.Services;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -35,6 +38,34 @@ namespace MarkdownNotesManager.App.ViewModels
         public ICommand ShowEditCommand { get; }
         public ICommand ShowPreviewCommand { get; }
         public ICommand SortByCategoryCommand { get; }
+
+        public RelayCommand ExportNoteCommand { get; }
+
+        private async Task ExportNoteAsync()
+        {
+            if (SelectedNote == null)
+                return;
+
+            var dlg = new SaveFileDialog
+            {
+                Filter = "Markdown files (*.md)|*.md|All files (*.*)|*.*",
+                FileName = MarkdownExporter.GetSafeFileName(SelectedNote.Title)
+            };
+
+            var result = dlg.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    var content = SelectedNote.Content ?? string.Empty;
+                    await File.WriteAllTextAsync(dlg.FileName, content);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show($"Error exporting note: {ex.Message}", "Export Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                }
+            }
+        }
 
         public Note? SelectedNote
         {
@@ -110,6 +141,8 @@ namespace MarkdownNotesManager.App.ViewModels
 
             SortByCategoryCommand = new RelayCommand(async _ => { _sortAscending = !_sortAscending; await ReloadNotesKeepSelectionAsync(SelectedNote?.Id ?? 0); });
 
+            ExportNoteCommand = new RelayCommand(async _ => await ExportNoteAsync());
+
             IsPreviewMode = false;
 
             _ = LoadDataAsync();
@@ -150,13 +183,14 @@ namespace MarkdownNotesManager.App.ViewModels
             }
             else if (SelectedCategory == null)
             {
-                return await _noteService.GetAllNotesAsync();
+                return await _note_service_get_all_async_fallback();
             }
             else
             {
                 return await _noteService.GetNotesByCategoryAsync(SelectedCategory.Id);
             }
         }
+        private Task<List<Note>> _note_service_get_all_async_fallback() => _noteService.GetAllNotesAsync();
 
         private void ApplySortAndLoad(IEnumerable<Note> sourceNotes)
         {
