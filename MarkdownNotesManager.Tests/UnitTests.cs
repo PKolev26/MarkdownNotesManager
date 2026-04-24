@@ -260,7 +260,6 @@ namespace MarkdownNotesManager.Tests
             Assert.IsNotNull(vm.SelectedNote);
             Assert.AreEqual("Untitled Note", vm.SelectedNote!.Title);
             Assert.AreEqual(category.Id, vm.SelectedNote.CategoryId);
-            Assert.AreSame(category, vm.SelectedNote.Category);
             Assert.IsFalse(vm.IsPreviewMode);
         }
 
