@@ -227,8 +227,20 @@ namespace MarkdownNotesManager.App.ViewModels
         {
             SelectedNote = new Note
             {
-                Title = "New Note ✏️",
-                Content = "# New Note ✏️",
+                Title = "Untitled Note",
+                Content =
+@"# New Note
+
+Start writing your markdown here...
+
+## Example
+- Bullet point
+- **Bold text**
+- *Italic text*
+
+```csharp
+Console.WriteLine(""Hello world!"");
+```",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 CategoryId = SelectedCategory?.Id,
